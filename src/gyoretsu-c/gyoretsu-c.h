@@ -42,7 +42,7 @@ void* DisposeMatrix(Matrix* mat);
  * @brief 行列同士の積
  * @param A 行列A
  * @param B 行列B
- * @returns 答えを格納する行列
+ * @returns 答えを格納する行列、新しくCreateされるため、Disposeしなければならない
  */
 Matrix* MulMatrix(const Matrix* A, const Matrix* B);
 
