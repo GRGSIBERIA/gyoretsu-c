@@ -62,7 +62,7 @@ Matrix* CreateMatrix(int numofRows, int numofColumns)
 			memset(mat->_mat, 0, matsize);
 		}
 		else
-		{
+		{	// ƒƒ‚ƒŠŠm•Û‚ÉŽ¸”s‚µ‚½‚©‚à‚µ‚ê‚È‚¢
 			assert(mat->_mat);
 		}
 	}
