@@ -1,19 +1,31 @@
+/**
+ * @file libraries.c
+ * @brief ライブラリ本体のプログラムコード
+ * @author 竹渕瑛一(GRGSIBERIA)
+ */
 #include "gyoretsu-c.h"
 #include <stdlib.h>
 #include <assert.h>
+#include <string.h>
 
 Matrix* CreateMatrix(int numofRows, int numofColumns)
 {
 	Matrix* mat;
+	int matsize;
+	matsize = numofRows * numofColumns * sizeof(double);
 	mat = (Matrix*)malloc(sizeof(Matrix));
 
 	if (mat)
 	{	// C6011の呼び出し規約でNULLチェックを行わなければならない
 		mat->_numofColumns = numofColumns;
 		mat->_numofRows = numofRows;
-		mat->_mat = (double*)malloc(sizeof(double) * numofRows * numofColumns);
+		mat->_mat = (double*)malloc(matsize);
 
-		if (!mat->_mat)
+		if (mat->_mat)
+		{	// C6011の呼び出し規約
+			memset(mat->_mat, 0, matsize);
+		}
+		else
 		{
 			assert(mat->_mat);
 		}
@@ -42,7 +54,37 @@ void* DisposeMatrix(Matrix* mat)
 	return mat;
 }
 
-void MulMatrix(Matrix* dest, Matrix* A, Matrix* B)
+Matrix* MulMatrix(Matrix* A, Matrix* B)
 {
+	int i, j, k;
+	int rows, columns, n;
+	Matrix* dest;
+	
+	columns = A->_numofColumns < B->_numofColumns ? A->_numofColumns : B->_numofColumns;
+	rows = A->_numofRows < B->_numofRows ? A->_numofRows : B->_numofRows;
 
+	// 正方行列であることを保証する
+	columns = columns < rows ? columns : rows;
+	rows = columns > rows ? rows : columns;
+	n = columns;
+
+	// 正方行列でなければ警告を出す
+	assert(rows == columns);
+
+	// 結果のための行列を生成する
+	dest = CreateMatrix(rows, columns);
+
+	// 行列の一般化した解
+	for (i = 0; i < rows; ++i)
+	{
+		for (j = 0; j < columns; ++j)
+		{
+			for (k = 0; k < n; ++k)
+			{
+				dest->_mat[i][j] += A->_mat[i][k] * B->_mat[k][j];
+			}
+		}
+	}
+
+	return dest;
 }

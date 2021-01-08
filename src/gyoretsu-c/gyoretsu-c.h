@@ -1,6 +1,8 @@
-﻿// gyoretsu-c.h : 標準のシステム インクルード ファイル用のインクルード ファイル、
-// または、プロジェクト専用のインクルード ファイル。
-
+﻿/**
+ * @file gyoretsu-c.h
+ * @brief 行列計算ライブラリ
+ * @author 竹渕瑛一(GRGSIBERIA)
+ */
 #pragma once
 
 /**
@@ -38,8 +40,8 @@ void* DisposeMatrix(Matrix* mat);
  * @fn
  * 行列同士の積、互いに行列が異なるならば、最小単位の正方行列を返す
  * @brief 行列同士の積
- * @param dest 答えを格納する行列
  * @param A 行列A
  * @param B 行列B
+ * @returns 答えを格納する行列
  */
-void MulMatrix(Matrix* dest, Matrix* A, Matrix* B);
+Matrix* MulMatrix(Matrix* A, Matrix* B);
