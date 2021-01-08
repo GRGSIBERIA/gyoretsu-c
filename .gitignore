@@ -9,3 +9,19 @@ install_manifest.txt
 compile_commands.json
 CTestTestfile.cmake
 _deps
+*.ninja
+*.json
+*.sqlite
+*.ipch
+*.opendb
+*.db-wal
+*.db-shm
+*.db
+src/gyoretsu-c/.vs/CMake Overview
+src/gyoretsu-c/out/build/x64-Debug (既定値)/VSInheritEnvironments.txt
+src/gyoretsu-c/.vs/gyoretsu-c/v16/.suo
+src/gyoretsu-c/out/build/x64-Debug (既定値)/.ninja_deps
+*.exe
+*.ilk
+*.pdb
+src/gyoretsu-c/out/build/x64-Debug (既定値)/.ninja_log
