@@ -6,7 +6,7 @@
 #pragma once
 
 /**
- * 行列構造体
+ * @brief 行列構造体
  */
 typedef struct _Matrix {
 	int _numofColumns;	//! 列数
