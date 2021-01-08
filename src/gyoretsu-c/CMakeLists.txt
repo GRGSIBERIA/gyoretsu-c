@@ -1,4 +1,4 @@
-﻿# CMakeList.txt : gyoretsu-c の CMake プロジェクト。ソースを含めて、次を定義します:
+# CMakeList.txt : gyoretsu-c の CMake プロジェクト。ソースを含めて、次を定義します:
 # プロジェクト専用ロジックはこちらです。
 #
 cmake_minimum_required (VERSION 3.8)

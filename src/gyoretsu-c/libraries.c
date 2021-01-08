@@ -1,7 +1,7 @@
 /**
  * @file libraries.c
- * @brief ƒ‰ƒCƒuƒ‰ƒŠ–{‘Ì‚ÌƒvƒƒOƒ‰ƒ€ƒR[ƒh
- * @author ’|Ÿº‰lˆê(GRGSIBERIA)
+ * @brief ãƒ©ã‚¤ãƒ–ãƒ©ãƒªæœ¬ä½“ã®ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚³ãƒ¼ãƒ‰
+ * @author ç«¹æ¸•ç‘›ä¸€(GRGSIBERIA)
  */
 #include "gyoretsu-c.h"
 #include <stdlib.h>
@@ -9,7 +9,7 @@
 #include <string.h>
 
 /**
- * row‚Æcolumn‚ªˆì‚ê‚Ä‚¢‚È‚¢‚©ƒ`ƒFƒbƒN‚·‚é
+ * rowã¨columnãŒæº¢ã‚Œã¦ã„ãªã„ã‹ãƒã‚§ãƒƒã‚¯ã™ã‚‹
  */
 void OverCheck(Matrix* X, int row, int column)
 {
@@ -19,12 +19,12 @@ void OverCheck(Matrix* X, int row, int column)
 double GetElem(Matrix* X, int row, int column)
 {
 	if (X && X->_mat)
-	{	// C6011‚ÌŒÄ‚Ño‚µ‹K–ñ‚ÅNULLƒ`ƒFƒbƒN‚µ‚È‚¢‚Æƒ_ƒ
+	{	// C6011ã®å‘¼ã³å‡ºã—è¦ç´„ã§NULLãƒã‚§ãƒƒã‚¯ã—ãªã„ã¨ãƒ€ãƒ¡
 		OverCheck(X, row, column);
 		return X->_mat[X->_numofRows * row + column];
 	}
 
-	// ‚¢‚âA‚¨‚Ü‚¦ƒ|ƒCƒ“ƒ^€‚ñ‚Å‚é
+	// ã„ã‚„ã€ãŠã¾ãˆãƒã‚¤ãƒ³ã‚¿æ­»ã‚“ã§ã‚‹
 	assert(0);
 
 	return 0.0;
@@ -39,7 +39,7 @@ void SetElem(Matrix* X, int row, int column, double val)
 	}
 	else
 	{
-		assert(0);	// ƒ|ƒCƒ“ƒ^€‚ñ‚Å‚é‚æ
+		assert(0);	// ãƒã‚¤ãƒ³ã‚¿æ­»ã‚“ã§ã‚‹ã‚ˆ
 	}
 }
 
@@ -52,17 +52,17 @@ Matrix* CreateMatrix(int numofRows, int numofColumns)
 	mat = (Matrix*)malloc(sizeof(Matrix));
 
 	if (mat)
-	{	// C6011‚ÌŒÄ‚Ño‚µ‹K–ñ‚ÅNULLƒ`ƒFƒbƒN‚ğs‚í‚È‚¯‚ê‚Î‚È‚ç‚È‚¢
+	{	// C6011ã®å‘¼ã³å‡ºã—è¦ç´„ã§NULLãƒã‚§ãƒƒã‚¯ã‚’è¡Œã‚ãªã‘ã‚Œã°ãªã‚‰ãªã„
 		mat->_numofColumns = numofColumns;
 		mat->_numofRows = numofRows;
 		mat->_mat = (double*)malloc(matsize);
 
 		if (mat->_mat)
-		{	// C6011‚ÌŒÄ‚Ño‚µ‹K–ñ
+		{	// C6011ã®å‘¼ã³å‡ºã—è¦ç´„
 			memset(mat->_mat, 0, matsize);
 		}
 		else
-		{	// ƒƒ‚ƒŠŠm•Û‚É¸”s‚µ‚½‚©‚à‚µ‚ê‚È‚¢
+		{	// ãƒ¡ãƒ¢ãƒªç¢ºä¿ã«å¤±æ•—ã—ãŸã‹ã‚‚ã—ã‚Œãªã„
 			assert(mat->_mat);
 		}
 	}
@@ -99,18 +99,18 @@ Matrix* MulMatrix(Matrix* A, Matrix* B)
 	columns = A->_numofColumns < B->_numofColumns ? A->_numofColumns : B->_numofColumns;
 	rows = A->_numofRows < B->_numofRows ? A->_numofRows : B->_numofRows;
 
-	// ³•ûs—ñ‚Å‚ ‚é‚±‚Æ‚ğ•ÛØ‚·‚é
+	// æ­£æ–¹è¡Œåˆ—ã§ã‚ã‚‹ã“ã¨ã‚’ä¿è¨¼ã™ã‚‹
 	columns = columns < rows ? columns : rows;
 	rows = columns > rows ? rows : columns;
 	n = columns;
 
-	// ³•ûs—ñ‚Å‚È‚¯‚ê‚ÎŒx‚ğo‚·
+	// æ­£æ–¹è¡Œåˆ—ã§ãªã‘ã‚Œã°è­¦å‘Šã‚’å‡ºã™
 	assert(rows == columns);
 
-	// Œ‹‰Ê‚Ì‚½‚ß‚Ìs—ñ‚ğ¶¬‚·‚é
+	// çµæœã®ãŸã‚ã®è¡Œåˆ—ã‚’ç”Ÿæˆã™ã‚‹
 	dest = CreateMatrix(rows, columns);
 
-	// s—ñ‚Ìˆê”Ê‰»‚µ‚½‰ğ
+	// è¡Œåˆ—ã®ä¸€èˆ¬åŒ–ã—ãŸè§£
 	for (i = 0; i < rows; ++i)
 	{
 		for (j = 0; j < columns; ++j)

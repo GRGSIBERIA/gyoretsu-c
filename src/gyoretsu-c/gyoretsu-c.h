@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file gyoretsu-c.h
  * @brief 行列計算ライブラリ
  * @author 竹渕瑛一(GRGSIBERIA)

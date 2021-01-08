@@ -1,4 +1,4 @@
-﻿/*
+/*
  * @file gyoretsu-c.c
  * @brief メインプログラム
  * @author 竹渕瑛一(GRGSIBERIA)
