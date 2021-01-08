@@ -67,6 +67,10 @@ double GetElem(const Matrix* X, const int row, const int column);
 void SetElem(Matrix* X, const int row, const int column, const double val);
 
 /**
+ * @fn
  * 行列のランクを返す
+ * @brief 行列のランクを求める
+ * @param X ランクを求めたい行列
+ * @returns ランク, ただし互いに最小となる最大の部分行列でランクの性質は満たさない
  */
 int Rank(const Matrix* X);
