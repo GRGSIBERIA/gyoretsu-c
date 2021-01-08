@@ -25,7 +25,7 @@ typedef struct _Matrix {
  * 行列構造体を関数で生成する
  * 内部的にmallocを呼び出しているので、勝手にMatrix構造体をmallocしてはいけない
  */
-Matrix* CreateMatrix(int numofRows, int numofColumns);
+Matrix* CreateMatrix(const int numofRows, const int numofColumns);
 
 /**
  * @fn
@@ -44,7 +44,7 @@ void* DisposeMatrix(Matrix* mat);
  * @param B 行列B
  * @returns 答えを格納する行列
  */
-Matrix* MulMatrix(Matrix* A, Matrix* B);
+Matrix* MulMatrix(const Matrix* A, const Matrix* B);
 
 /**
  * @fn
@@ -54,7 +54,7 @@ Matrix* MulMatrix(Matrix* A, Matrix* B);
  * @param row 行
  * @param column 列
  */
-double GetElem(Matrix* X, int row, int column);
+double GetElem(const Matrix* X, const int row, const int column);
 
 /**
  * @fn
@@ -64,4 +64,9 @@ double GetElem(Matrix* X, int row, int column);
  * @param row 行
  * @param column 列
  */
-void SetElem(Matrix* X, int row, int column, double val);
+void SetElem(Matrix* X, const int row, const int column, const double val);
+
+/**
+ * 行列のランクを返す
+ */
+int Rank(const Matrix* X);

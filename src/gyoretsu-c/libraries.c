@@ -11,12 +11,12 @@
 /**
  * rowとcolumnが溢れていないかチェックする
  */
-void OverCheck(Matrix* X, int row, int column)
+void OverCheck(const Matrix* X, const int row, const int column)
 {
 	assert(X->_numofColumns > column && X->_numofRows > row);
 }
 
-double GetElem(Matrix* X, int row, int column)
+double GetElem(const Matrix* X, const int row, const int column)
 {
 	if (X && X->_mat)
 	{	// C6011の呼び出し規約でNULLチェックしないとダメ
@@ -30,7 +30,7 @@ double GetElem(Matrix* X, int row, int column)
 	return 0.0;
 }
 
-void SetElem(Matrix* X, int row, int column, double val)
+void SetElem(Matrix* X, const int row, const int column, const double val)
 {
 	if (X && X->_mat)
 	{
@@ -43,8 +43,7 @@ void SetElem(Matrix* X, int row, int column, double val)
 	}
 }
 
-
-Matrix* CreateMatrix(int numofRows, int numofColumns)
+Matrix* CreateMatrix(const int numofRows, const int numofColumns)
 {
 	Matrix* mat;
 	int matsize;
@@ -90,12 +89,18 @@ void* DisposeMatrix(Matrix* mat)
 	return mat;
 }
 
-Matrix* MulMatrix(Matrix* A, Matrix* B)
+int Rank(const Matrix* X)
+{
+	return X->_numofRows < X->_numofColumns ? X->_numofRows : X->_numofColumns;
+}
+
+Matrix* MulMatrix(const Matrix* A, const Matrix* B)
 {
 	int i, j, k;
 	int rows, columns, n;
 	Matrix* dest;
 	
+	// 互いに最も小さなランクで計算する
 	columns = A->_numofColumns < B->_numofColumns ? A->_numofColumns : B->_numofColumns;
 	rows = A->_numofRows < B->_numofRows ? A->_numofRows : B->_numofRows;
 
