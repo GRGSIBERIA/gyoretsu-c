@@ -8,6 +8,42 @@
 #include <assert.h>
 #include <string.h>
 
+/**
+ * rowとcolumnが溢れていないかチェックする
+ */
+void OverCheck(Matrix* X, int row, int column)
+{
+	assert(X->_numofColumns > column && X->_numofRows > row);
+}
+
+double GetElem(Matrix* X, int row, int column)
+{
+	if (X && X->_mat)
+	{	// C6011の呼び出し規約でNULLチェックしないとダメ
+		OverCheck(X, row, column);
+		return X->_mat[X->_numofRows * row + column];
+	}
+
+	// いや、おまえポインタ死んでる
+	assert(0);
+
+	return 0.0;
+}
+
+void SetElem(Matrix* X, int row, int column, double val)
+{
+	if (X && X->_mat)
+	{
+		OverCheck(X, row, column);
+		X->_mat[X->_numofRows * row + column] = val;
+	}
+	else
+	{
+		assert(0);	// ポインタ死んでるよ
+	}
+}
+
+
 Matrix* CreateMatrix(int numofRows, int numofColumns)
 {
 	Matrix* mat;
@@ -81,7 +117,7 @@ Matrix* MulMatrix(Matrix* A, Matrix* B)
 		{
 			for (k = 0; k < n; ++k)
 			{
-				dest->_mat[i][j] += A->_mat[i][k] * B->_mat[k][j];
+				dest->_mat[i * rows + j] += A->_mat[i * rows + k] * B->_mat[k * rows + j];
 			}
 		}
 	}

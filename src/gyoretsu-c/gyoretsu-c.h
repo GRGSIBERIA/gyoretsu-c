@@ -11,7 +11,7 @@
 typedef struct _Matrix {
 	int _numofColumns;	//! 列数
 	int _numofRows;		//! 行数
-	double** _mat;		//! 行列本体
+	double* _mat;		//! 行列本体
 } Matrix;
 
 /**
@@ -45,3 +45,23 @@ void* DisposeMatrix(Matrix* mat);
  * @returns 答えを格納する行列
  */
 Matrix* MulMatrix(Matrix* A, Matrix* B);
+
+/**
+ * @fn
+ * 行列の要素を取得する
+ * @brief 要素のGETアクセサ
+ * @param X 対象の行列
+ * @param row 行
+ * @param column 列
+ */
+double GetElem(Matrix* X, int row, int column);
+
+/**
+ * @fn
+ * 行列の要素を設定する
+ * @brief 要素のSETアクセサ
+ * @param X 対象の行列
+ * @param row 行
+ * @param column 列
+ */
+void SetElem(Matrix* X, int row, int column, double val);
