@@ -102,18 +102,18 @@ Matrix* MulMatrix(Matrix* A, Matrix* B)
 	// 正方行列であることを保証する
 	columns = columns < rows ? columns : rows;
 	rows = columns > rows ? rows : columns;
-	n = columns;
+	n = columns < rows ? columns : rows;
 
 	// 正方行列でなければ警告を出す
 	assert(rows == columns);
 
 	// 結果のための行列を生成する
-	dest = CreateMatrix(rows, columns);
+	dest = CreateMatrix(n, n);
 
 	// 行列の一般化した解
-	for (i = 0; i < rows; ++i)
+	for (i = 0; i < dest->_numofRows; ++i)
 	{
-		for (j = 0; j < columns; ++j)
+		for (j = 0; j < dest->_numofColumns; ++j)
 		{
 			for (k = 0; k < n; ++k)
 			{
