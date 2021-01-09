@@ -74,3 +74,13 @@ void SetElem(Matrix* X, const int row, const int column, const double val);
  * @returns ランク, ただし互いに最小となる最大の部分行列でランクの性質は満たさない
  */
 int Rank(const Matrix* X);
+
+/**
+ * @fn
+ * アダマール積の結果を返す
+ * @brief 行列のアダマール積
+ * @param A 行列A
+ * @param B 行列B
+ * @returns アダマール積の結果、行列のサイズが異なる場合、互いに最小の行列を返す
+ */
+Matrix* HadamardProduct(const Matrix* A, const Matrix* B);

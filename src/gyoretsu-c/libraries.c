@@ -94,23 +94,27 @@ int Rank(const Matrix* X)
 	return X->_numofRows < X->_numofColumns ? X->_numofRows : X->_numofColumns;
 }
 
-Matrix* MulMatrix(const Matrix* A, const Matrix* B)
+int GetNRank(const Matrix* A, const Matrix* B)
 {
-	int i, j, k;
 	int rows, columns, n;
-	Matrix* dest;
-	
+
 	// 互いに最も小さなランクで計算する
 	columns = A->_numofColumns < B->_numofColumns ? A->_numofColumns : B->_numofColumns;
 	rows = A->_numofRows < B->_numofRows ? A->_numofRows : B->_numofRows;
 
-	// 正方行列であることを保証する
+	// 互いに最も小さい部分行列となる数字を返す
 	columns = columns < rows ? columns : rows;
 	rows = columns > rows ? rows : columns;
-	n = columns < rows ? columns : rows;
+	return columns < rows ? columns : rows;
+}
 
-	// 正方行列でなければ警告を出す
-	assert(rows == columns);
+Matrix* MulMatrix(const Matrix* A, const Matrix* B)
+{
+	int i, j, k;
+	int n;
+	Matrix* dest;
+	
+	n = GetNRank(A, B);
 
 	// 結果のための行列を生成する
 	dest = CreateMatrix(n, n);
@@ -118,12 +122,39 @@ Matrix* MulMatrix(const Matrix* A, const Matrix* B)
 	// 行列の一般化した解
 	for (i = 0; i < dest->_numofRows; ++i)
 	{
+		int row = i * dest->_numofRows;
+
 		for (j = 0; j < dest->_numofColumns; ++j)
 		{
 			for (k = 0; k < n; ++k)
 			{
-				dest->_mat[i * rows + j] += A->_mat[i * rows + k] * B->_mat[k * rows + j];
+				dest->_mat[row + j] += A->_mat[row + k] * B->_mat[k * dest->_numofRows + j];
 			}
+		}
+	}
+
+	return dest;
+}
+
+Matrix* HadamardProduct(const Matrix* A, const Matrix* B)
+{
+	int i, j;
+	int n;
+	Matrix* dest;
+
+	n = GetNRank(A, B);
+
+	dest = CreateMatrix(n, n);
+
+	for (i = 0; i < dest->_numofRows; ++i)
+	{
+		int row = i * dest->_numofRows;
+
+		for (j = 0; j < dest->_numofColumns; ++j)
+		{
+			int index = row + j;
+
+			dest->_mat[index] = A->_mat[index] * B->_mat[index];
 		}
 	}
 
