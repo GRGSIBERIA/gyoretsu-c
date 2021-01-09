@@ -160,3 +160,43 @@ Matrix* HadamardProduct(const Matrix* A, const Matrix* B)
 
 	return dest;
 }
+
+Matrix* AddMatrix(const Matrix* A, const Matrix* B, int* errorHandle)
+{
+	int i, j;
+	Matrix* dest;
+
+	if (errorHandle)
+	{
+		// 行列A, Bのサイズは一致しなければならない
+		*errorHandle = A->_numofColumns == B->_numofColumns && A->_numofRows == B->_numofRows;
+	}
+	else
+	{
+		assert(0);	// エラーハンドルにアドレスが割り振られていない
+		return 0;
+	}
+
+	if (*errorHandle)
+	{
+		dest = CreateMatrix(A->_numofRows, A->_numofColumns);
+	}
+	else
+	{
+		assert(0);	// エラーハンドルのデフォルト値は0以外
+		return 0;
+	}
+
+	for (i = 0; i < A->_numofRows; ++i)
+	{
+		int row = A->_numofRows * i;
+
+		for (j = 0; j < A->_numofColumns; ++j)
+		{
+			int index = row + j;
+			dest->_mat[index] = A->_mat[index] + B->_mat[index];
+		}
+	}
+
+	return dest;
+}
