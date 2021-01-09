@@ -136,32 +136,40 @@ Matrix* MulMatrix(const Matrix* A, const Matrix* B)
 	return dest;
 }
 
-Matrix* HadamardProduct(const Matrix* A, const Matrix* B)
+/**
+ * @brief 行列の足し算
+ */
+void OperatorAdd(Matrix* dest, const Matrix* A, const Matrix* B, int index)
 {
-	int i, j;
-	int n;
-	Matrix* dest;
-
-	n = GetNRank(A, B);
-
-	dest = CreateMatrix(n, n);
-
-	for (i = 0; i < dest->_numofRows; ++i)
-	{
-		int row = i * dest->_numofRows;
-
-		for (j = 0; j < dest->_numofColumns; ++j)
-		{
-			int index = row + j;
-
-			dest->_mat[index] = A->_mat[index] * B->_mat[index];
-		}
-	}
-
-	return dest;
+	dest->_mat[index] = A->_mat[index] + B->_mat[index];
 }
 
-Matrix* AddMatrix(const Matrix* A, const Matrix* B, int* errorHandle)
+/**
+ * @brief 行列の引き算
+ */
+void OperatorSub(Matrix* dest, const Matrix* A, const Matrix* B, int index)
+{
+	dest->_mat[index] = A->_mat[index] - B->_mat[index];
+}
+
+/**
+ * @brief 行列のアダマール積
+ */
+void OperatorHadamard(Matrix* dest, const Matrix* A, const Matrix* B, int index)
+{
+	dest->_mat[index] = A->_mat[index] * B->_mat[index];
+}
+
+/**
+ * @fn
+ * (A(i,j), (B(i,j)) -> C(i,j)となる組を関数化したもの
+ * @brief 加減とアダマール積をカリー化したもの
+ * @param A 行列A
+ * @param B 行列B
+ * @param errorHandle 値が0なら成功、非ゼロなら障害発生
+ * @param op カリー化対象の関数ポインタ
+ */
+Matrix* CurryMatrixOperatorFunction(const Matrix* A, const Matrix* B, int* errorHandle, void (*op)(Matrix*, const Matrix*, const Matrix*, int))
 {
 	int i, j;
 	Matrix* dest;
@@ -194,9 +202,24 @@ Matrix* AddMatrix(const Matrix* A, const Matrix* B, int* errorHandle)
 		for (j = 0; j < A->_numofColumns; ++j)
 		{
 			int index = row + j;
-			dest->_mat[index] = A->_mat[index] + B->_mat[index];
+			op(dest, A, B, index);
 		}
 	}
 
 	return dest;
+}
+
+Matrix* HadamardProduct(const Matrix* A, const Matrix* B, int* errorHandle)
+{
+	return CurryMatrixOperatorFunction(A, B, errorHandle, &OperatorHadamard);
+}
+
+Matrix* AddMatrix(const Matrix* A, const Matrix* B, int* errorHandle)
+{
+	return CurryMatrixOperatorFunction(A, B, errorHandle, &OperatorAdd);
+}
+
+Matrix* SubMatrix(const Matrix* A, const Matrix* B, int* errorHandle)
+{
+	return CurryMatrixOperatorFunction(A, B, errorHandle, &OperatorSub);
 }

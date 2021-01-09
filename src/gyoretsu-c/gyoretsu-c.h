@@ -81,19 +81,35 @@ int Rank(const Matrix* X);
  * @brief 行列のアダマール積
  * @param A 行列A
  * @param B 行列B
- * @returns アダマール積の結果、行列のサイズが異なる場合、互いに最小の行列を返す
+ * @param errorHandle 計算可能な行列かどうか結果を返す、デフォルトは0以外
+ * @returns アダマール積の結果、計算不可能である場合は0
+ * @detail
+ * 行列は互いに同じ大きさでなければ計算できない。
  */
-Matrix* HadamardProduct(const Matrix* A, const Matrix* B);
+Matrix* HadamardProduct(const Matrix* A, const Matrix* B, int* errorHandle);
 
 /**
  * @fn
- * 行列の和を返す
- * @brief 行列の和
+ * 行列の足し算を行う
+ * @brief 行列の足し算
  * @param A 行列A
  * @param B 行列B
  * @param errorHandle 計算可能な行列かどうか結果を返す、デフォルトは0以外
  * @returns 行列の和、計算不可能である場合は0
  * @detail
- * 行列の和は互いに同じ大きさでなければ計算できない。
+ * 行列は互いに同じ大きさでなければ計算できない。
+ */
+Matrix* AddMatrix(const Matrix* A, const Matrix* B, int* errorHandle);
+
+/**
+ * @fn
+ * 行列の引き算を行う
+ * @brief 行列の引き算
+ * @param A 行列A
+ * @param B 行列B
+ * @param errorHandle 計算可能な行列かどうか結果を返す、デフォルトは0以外
+ * @returns 行列の減、計算不可能である場合は0
+ * @detail
+ * 行列は互いに同じ大きさでなければ計算できない。
  */
 Matrix* AddMatrix(const Matrix* A, const Matrix* B, int* errorHandle);
