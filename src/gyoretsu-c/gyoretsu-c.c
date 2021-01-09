@@ -1,5 +1,8 @@
-﻿// gyoretsu-c.cpp : アプリケーションのエントリ ポイントを定義します。
-//
+/*
+ * @file gyoretsu-c.c
+ * @brief メインプログラム
+ * @author 竹渕瑛一(GRGSIBERIA)
+ */
 
 #include "gyoretsu-c.h"
 
